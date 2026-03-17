@@ -1,0 +1,28 @@
+{
+  "name": "upstream-to-heart-rate-raw",
+  "config": {
+    "connector.class": "org.apache.kafka.connect.mirror.MirrorSourceConnector",
+    "tasks.max": "1",
+
+    "source.cluster.alias": "upstream",
+    "target.cluster.alias": "confluent",
+
+    "source.cluster.bootstrap.servers": "<UPSTREAM_BOOTSTRAP>",
+    "target.cluster.bootstrap.servers": "<CONFLUENT_BOOTSTRAP>",
+
+    "source.cluster.security.protocol": "SASL_SSL",
+    "source.cluster.sasl.mechanism": "PLAIN",
+    "source.cluster.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username='<UPSTREAM_API_KEY>' password='<UPSTREAM_API_SECRET>';",
+
+    "target.cluster.security.protocol": "SASL_SSL",
+    "target.cluster.sasl.mechanism": "PLAIN",
+    "target.cluster.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username='<CONFLUENT_API_KEY>' password='<CONFLUENT_API_SECRET>';",
+
+    "topics": "heart-rate-raw",
+    "emit.checkpoints.enabled": "false",
+    "emit.heartbeats.enabled": "false",
+    "sync.topic.acls.enabled": "false",
+    "sync.topic.configs.enabled": "false",
+    "replication.factor": "3"
+  }
+}

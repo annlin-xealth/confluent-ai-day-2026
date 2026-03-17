@@ -1,0 +1,107 @@
+{
+  "type": "record",
+  "name": "heart_rate_raw_value",
+  "namespace": "org.apache.flink.avro.generated.record",
+  "doc": "Vendor-neutral schema for raw heart rate events from wearable or remote monitoring sources",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": [ "null", "string" ],
+      "default": null,
+      "doc": "Unique user identifier"
+    },
+    {
+      "name": "event_id",
+      "aliases": ["datauuid"],
+      "type": [ "null", "string" ],
+      "default": null,
+      "doc": "Unique identifier for this heart rate data record"
+    },
+    {
+      "name": "device_id",
+      "aliases": ["deviceuuid"],
+      "type": [ "null", "string" ],
+      "default": null,
+      "doc": "User device ID"
+    },
+    {
+      "name": "source_app_id",
+      "aliases": ["pkg_name"],
+      "type": [ "null", "string" ],
+      "default": null,
+      "doc": "Identifier of the source application that produced this event"
+    },
+    {
+      "name": "create_time",
+      "type": [ "null", "long" ],
+      "default": null,
+      "doc": "Create time of this measurement in milliseconds since the Unix epoch"
+    },
+    {
+      "name": "update_time",
+      "type": [ "null", "long" ],
+      "default": null,
+      "doc": "Updated time of this measurement in milliseconds since the Unix epoch"
+    },
+    {
+      "name": "start_time",
+      "type": [ "null", "long" ],
+      "default": null,
+      "doc": "Start time when the measurement was taken in milliseconds since the Unix epoch"
+    },
+    {
+      "name": "end_time",
+      "type": [ "null", "long" ],
+      "default": null,
+      "doc": "End time of the measurement in milliseconds since the Unix epoch"
+    },
+    {
+      "name": "time_offset",
+      "type": [ "null", "long" ],
+      "default": null,
+      "doc": "Time zone offset in milliseconds from UTC (e.g., -28800000 for UTC-08:00)"
+    },
+    {
+      "name": "comment",
+      "type": [ "null", "string" ],
+      "default": null,
+      "doc": "Optional comment for this entry"
+    },
+    {
+      "name": "heart_rate",
+      "type": [ "null", "float" ],
+      "default": null,
+      "doc": "Heart rate value in beats per minute (bpm)"
+    },
+    {
+      "name": "heart_beat_count",
+      "type": [ "null", "int" ],
+      "default": null,
+      "doc": "Total heart beat count during the measurement period"
+    },
+    {
+      "name": "min",
+      "type": [ "null", "float" ],
+      "default": null,
+      "doc": "Minimum heart rate value in the session"
+    },
+    {
+      "name": "max",
+      "type": [ "null", "float" ],
+      "default": null,
+      "doc": "Maximum heart rate value in the session"
+    },
+    {
+      "name": "client_data_id",
+      "type": [ "null", "string" ],
+      "default": null,
+      "doc": "Data ID defined by the data owner app"
+    },
+    {
+      "name": "client_data_ver",
+      "type": [ "null", "int" ],
+      "default": null,
+      "doc": "Data version defined by the data owner app"
+    }
+  ]
+}

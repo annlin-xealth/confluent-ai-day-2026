@@ -1,0 +1,15 @@
+# Local credentials and overrides
+producer/.env
+producer/.env.local
+producer/.kafka_key.json
+producer/.sr_key.json
+
+# Local build artifacts
+producer/.gradle/
+producer/build/
+
+# AI agent local files
+ai-agent/.env
+ai-agent/.gradle/
+ai-agent/build/
+ai-agent/__pycache__/
