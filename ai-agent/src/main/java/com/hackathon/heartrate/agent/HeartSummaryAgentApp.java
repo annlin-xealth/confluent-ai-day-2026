@@ -47,13 +47,15 @@ public class HeartSummaryAgentApp {
         private final Instant start;
         private final Instant end;
         private final double heartRate;
+        private final Instant ingestedAt;
 
-        private HeartEvent(String userId, String eventId, Instant start, Instant end, double heartRate) {
+        private HeartEvent(String userId, String eventId, Instant start, Instant end, double heartRate, Instant ingestedAt) {
             this.userId = userId;
             this.eventId = eventId;
             this.start = start;
             this.end = end;
             this.heartRate = heartRate;
+            this.ingestedAt = ingestedAt;
         }
     }
 
@@ -88,8 +90,8 @@ public class HeartSummaryAgentApp {
         consumerProps.put("security.protocol", "SASL_SSL");
         consumerProps.put("sasl.mechanism", "PLAIN");
         consumerProps.put(SaslConfigs.SASL_JAAS_CONFIG, kafkaJaasConfig);
-        consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, "heart-summary-agent-java-v1");
-        consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, "heart-summary-agent-java-v2");
+        consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         consumerProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         consumerProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaJsonSchemaDeserializer.class.getName());
@@ -122,7 +124,7 @@ public class HeartSummaryAgentApp {
                 Instant now = Instant.now();
 
                 for (ConsumerRecord<String, Object> record : records) {
-                    HeartEvent event = parseEvent(record.value());
+                    HeartEvent event = parseEvent(record.value(), now);
                     if (event == null) {
                         continue;
                     }
@@ -160,7 +162,7 @@ public class HeartSummaryAgentApp {
         }
     }
 
-    private static HeartEvent parseEvent(Object value) {
+    private static HeartEvent parseEvent(Object value, Instant ingestedAt) {
         if (value == null) {
             return null;
         }
@@ -194,12 +196,12 @@ public class HeartSummaryAgentApp {
             end = start;
         }
 
-        return new HeartEvent(userId, eventId, start, end, heartRate);
+        return new HeartEvent(userId, eventId, start, end, heartRate, ingestedAt);
     }
 
     private static void evictOld(Deque<HeartEvent> queue, Instant now, int windowSeconds) {
         Instant cutoff = now.minusSeconds(windowSeconds);
-        while (!queue.isEmpty() && queue.peekFirst().start.isBefore(cutoff)) {
+        while (!queue.isEmpty() && queue.peekFirst().ingestedAt.isBefore(cutoff)) {
             queue.removeFirst();
         }
     }

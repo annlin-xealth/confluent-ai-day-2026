@@ -57,3 +57,7 @@ Single agent that consumes [heart-rate-cleaned](flink/sql/00_tables.sql), builds
 - Optional env template: [ai-agent/.env.example](ai-agent/.env.example)
 
 The scripts read credentials and defaults from [producer/.env](producer/.env). If `OPENAI_API_KEY` is set, it uses an LLM for the summary text; otherwise it falls back to deterministic rule-based wording.
+
+## Example Summary
+
+![patient.heart_state.snapshot topic in Confluent Cloud](assets/patient_heart_state_snapshot.png)
